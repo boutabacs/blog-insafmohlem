@@ -7,7 +7,7 @@ import { BiEditAlt, BiLogOut } from "react-icons/bi";
 import { PostCard } from "../components/BlogSection";
 
 const Profile = () => {
-  // Simuler un utilisateur (plus tard, cela viendra d'un contexte d'authentification)
+  
   const user = {
     name: "Philip Reyes",
     role: "Premium Writer",
@@ -19,7 +19,7 @@ const Profile = () => {
     followers: 1250
   };
 
-  // On prend quelques posts pour la section "My Articles"
+  
   const myPosts = posts.slice(0, 3);
 
   return (
@@ -27,10 +27,10 @@ const Profile = () => {
       <Navbar />
 
       <main className="flex-grow pt-20 pb-32">
-        {/* Header du Profil */}
+        
         <div className="max-w-[1100px] mx-auto px-4 mb-20">
           <div className="flex flex-col md:flex-row items-center md:items-start gap-12 border-b border-gray-100 pb-16">
-            {/* Avatar */}
+           
             <div className="relative group">
               <div className="w-32 h-32 md:w-48 md:h-48 bg-gray-100 rounded-full flex items-center justify-center overflow-hidden border-4 border-white shadow-xl">
                 <svg className="w-24 h-24 md:w-32 md:h-32 text-gray-300" fill="currentColor" viewBox="0 0 24 24">
@@ -42,7 +42,7 @@ const Profile = () => {
               </button>
             </div>
 
-            {/* Infos Utilisateur */}
+            
             <div className="flex-grow text-center md:text-left pt-4">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-6">
                 <div>
@@ -81,7 +81,7 @@ const Profile = () => {
           </div>
         </div>
 
-        {/* Section Contenu */}
+        
         <div className="max-w-[1100px] mx-auto px-4 flex flex-col items-center">
           <div className="flex items-center gap-12 mb-12 border-b border-gray-100 w-full justify-center md:justify-start">
             <button className="pb-4 border-b-2 border-black text-[11px] font-black tracking-widest uppercase text-black">

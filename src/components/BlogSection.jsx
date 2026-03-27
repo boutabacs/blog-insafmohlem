@@ -3,32 +3,40 @@ import { HiCheck } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import { posts as postsData } from "../data/posts";
 
-export const PostCard = ({ id, category, title, author, date, image, description }) => {
+export const PostCard = ({
+  _id,
+  category,
+  title,
+  author,
+  date,
+  image,
+  description,
+}) => {
   return (
     <article className="max-w-[1100px] mx-auto mb-24 text-center flex flex-col items-center justify-center">
-      
       <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-black block mb-4">
         {category}
       </span>
 
-      
-      <Link to={`/article/${id}`}>
+      <Link to={`/article/${_id}`}>
         <h2 className="w-3/4 mx-auto text-5xl md:text-5xl font-bold mb-6 cursor-pointer underline decoration-6 underline-offset-8 decoration-black leading-tight hover:text-gray-700 transition-colors">
           {title}
         </h2>
       </Link>
 
-  {/* Author and Date */}
+      {/* Author and Date */}
       <div className="flex items-center justify-center gap-4 text-[10px] font-bold tracking-widest uppercase mb-10">
-        <Link to={`/author/${author}`} className="text-black hover:text-gray-500 transition-colors cursor-pointer">
+        <Link
+          to={`/article/${author}`}
+          className="text-black hover:text-gray-500 transition-colors cursor-pointer"
+        >
           {author}
         </Link>
         <span className="text-gray-300">•</span>
         <span className="text-black">{date}</span>
       </div>
 
-      
-      <Link to={`/article/${id}`} className="w-full">
+      <Link to={`/article/${_id}`} className="w-full">
         <div className="mb-10 overflow-hidden cursor-pointer group">
           <img
             src={image}
@@ -38,7 +46,6 @@ export const PostCard = ({ id, category, title, author, date, image, description
         </div>
       </Link>
 
-      
       <p className="text-gray-500 leading-relaxed max-w-[700px] mx-auto text-sm md:text-base">
         {description}
       </p>

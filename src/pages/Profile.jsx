@@ -1,39 +1,58 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { posts } from "../data/posts";
 import { Link } from "react-router-dom";
 import { BiEditAlt, BiLogOut } from "react-icons/bi";
 import { PostCard } from "../components/BlogSection";
+import axios from "axios";
 
 const Profile = () => {
-  
+  const data = JSON.parse(localStorage.getItem("user") || null);
+
   const user = {
-    name: "Philip Reyes",
+    name: data.username,
     role: "Premium Writer",
     bio: "Passionate about fashion, skin care and lifestyle. Sharing my thoughts on how to live a better life through simple habits.",
-    avatar: null, // Silhouette par défaut
+    avatar: null,
     joinedDate: "September 2021",
     postsCount: 8,
     following: 124,
-    followers: 1250
+    followers: 1250,
   };
 
-  
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const { data } = await axios.get(
+        "http://localhost:3000/api/v1/blog/single-article",
+        {
+          headers: {
+            "x-auth-token": JSON.parse(localStorage.getItem("token")),
+          },
+        },
+      );
+      setPosts(data);
+    };
+
+    fetchPosts();
+  }, []);
+
   const myPosts = posts.slice(0, 3);
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
-      <Navbar />
-
-      <main className="flex-grow pt-20 pb-32">
-        
-        <div className="max-w-[1100px] mx-auto px-4 mb-20">
+      <main className="grow pt-20 pb-32">
+        <div className="max-w-257 mx-auto px-4 mb-20">
           <div className="flex flex-col md:flex-row items-center md:items-start gap-12 border-b border-gray-100 pb-16">
-           
             <div className="relative group">
               <div className="w-32 h-32 md:w-48 md:h-48 bg-gray-100 rounded-full flex items-center justify-center overflow-hidden border-4 border-white shadow-xl">
-                <svg className="w-24 h-24 md:w-32 md:h-32 text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+                <svg
+                  className="w-24 h-24 md:w-32 md:h-32 text-gray-300"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
                   <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
                 </svg>
               </div>
@@ -42,18 +61,24 @@ const Profile = () => {
               </button>
             </div>
 
-            
             <div className="flex-grow text-center md:text-left pt-4">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-6">
                 <div>
-                  <h1 className="text-4xl font-bold text-black mb-1">{user.name}</h1>
-                  <span className="text-[11px] font-black tracking-[0.3em] uppercase text-gray-400">{user.role}</span>
+                  <h1 className="text-4xl font-bold text-black mb-1">
+                    {user.name}
+                  </h1>
+                  <span className="text-[11px] font-black tracking-[0.3em] uppercase text-gray-400">
+                    {user.role}
+                  </span>
                 </div>
                 <div className="flex gap-4 justify-center">
                   <button className="bg-black text-white px-8 py-3 text-[11px] font-black tracking-[0.2em] uppercase hover:bg-gray-800 transition-colors">
                     Edit Profile
                   </button>
-                  <Link to="/login" className="border border-gray-200 p-3 hover:bg-gray-50 transition-colors text-gray-400 hover:text-red-500">
+                  <Link
+                    to="/login"
+                    className="border border-gray-200 p-3 hover:bg-gray-50 transition-colors text-gray-400 hover:text-red-500"
+                  >
                     <BiLogOut className="text-xl" />
                   </Link>
                 </div>
@@ -65,23 +90,34 @@ const Profile = () => {
 
               <div className="flex flex-wrap justify-center md:justify-start gap-8 md:gap-12">
                 <div className="flex flex-col">
-                  <span className="text-2xl font-bold text-black">{user.postsCount}</span>
-                  <span className="text-[10px] font-black tracking-widest uppercase text-gray-400">Posts</span>
+                  <span className="text-2xl font-bold text-black">
+                    {user.postsCount}
+                  </span>
+                  <span className="text-[10px] font-black tracking-widest uppercase text-gray-400">
+                    Posts
+                  </span>
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-2xl font-bold text-black">{user.followers}</span>
-                  <span className="text-[10px] font-black tracking-widest uppercase text-gray-400">Followers</span>
+                  <span className="text-2xl font-bold text-black">
+                    {user.followers}
+                  </span>
+                  <span className="text-[10px] font-black tracking-widest uppercase text-gray-400">
+                    Followers
+                  </span>
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-2xl font-bold text-black">{user.following}</span>
-                  <span className="text-[10px] font-black tracking-widest uppercase text-gray-400">Following</span>
+                  <span className="text-2xl font-bold text-black">
+                    {user.following}
+                  </span>
+                  <span className="text-[10px] font-black tracking-widest uppercase text-gray-400">
+                    Following
+                  </span>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        
         <div className="max-w-[1100px] mx-auto px-4 flex flex-col items-center">
           <div className="flex items-center gap-12 mb-12 border-b border-gray-100 w-full justify-center md:justify-start">
             <button className="pb-4 border-b-2 border-black text-[11px] font-black tracking-widest uppercase text-black">
@@ -93,10 +129,10 @@ const Profile = () => {
           </div>
 
           <div className="w-full">
-            {myPosts.map((post, index) => (
+            {posts.map((post, index) => (
               <React.Fragment key={post.id}>
                 <PostCard {...post} />
-                {index < myPosts.length - 1 && (
+                {index < posts.length - 1 && (
                   <div className="w-2/3 h-[1px] bg-gray-200 mx-auto mb-24"></div>
                 )}
               </React.Fragment>
@@ -104,8 +140,6 @@ const Profile = () => {
           </div>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 };
